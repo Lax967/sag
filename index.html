@@ -2,54 +2,61 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy 6-Month Monthsary! ❤️</title>
     <style>
-        body { font-family: 'Georgia', serif; background: #ffdee9; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow-x: hidden; margin: 0; }
-        
-        /* Layout Grid */
-        .main-container { display: grid; grid-template-columns: 1fr 2fr 1fr; align-items: center; gap: 40px; max-width: 1000px; padding: 20px; }
-        
-        .envelope { width: 180px; height: 120px; background: #fffaf0; border: 2px solid #e3beaa; border-radius: 5px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: transform 0.3s; margin: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .envelope:hover { transform: scale(1.05); }
+        body { 
+            margin: 0; 
+            background: #fce4ec; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="red" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>'), auto;
+            overflow: hidden;
+            font-family: 'Georgia', serif;
+        }
 
-        /* Cursor Trail Logic */
-        .cursor-emoji { position: fixed; pointer-events: none; z-index: 9999; animation: fadeUp 1s ease-out forwards; font-size: 20px; }
-        @keyframes fadeUp { 0% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; transform: translateY(-60px); } }
+        /* Floating Hearts Background */
+        .heart { position: absolute; color: #ff80ab; animation: float 6s linear infinite; }
+        @keyframes float { 0% { transform: translateY(100vh); opacity: 1; } 100% { transform: translateY(-10vh); opacity: 0; } }
+
+        #main-content { display: none; text-align: center; }
+        .envelope-container { width: 300px; margin-bottom: 20px; }
+        button { padding: 15px 30px; font-size: 20px; cursor: pointer; border-radius: 20px; border: none; background: #fff; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
     </style>
 </head>
 <body>
 
-    <div class="main-container">
-        <div>
-            <div class="envelope">Month 1</div>
-            <div class="envelope">Month 2</div>
-            <div class="envelope">Month 3</div>
-        </div>
+    <!-- Intro Button -->
+    <button id="intro-btn">Click to see your surprise</button>
 
-        <div style="text-align: center;">
+    <div id="main-content">
+        <!-- Central Bouquet Reference -->
+        <div class="envelope-container">
+            <img src="YOUR_BOUQUET_IMAGE_URL" alt="Beautiful Bouquet" style="width: 100%;">
             <h1>To My Love</h1>
             <p>Our journey is just beginning...</p>
-        </div>
-
-        <div>
-            <div class="envelope">Month 4</div>
-            <div class="envelope">Month 5</div>
-            <div class="envelope">Month 6</div>
         </div>
     </div>
 
     <script>
-        const emojis = ['❤️', '✨', '🌹', '💌', '💘'];
-        document.addEventListener('mousemove', (e) => {
-            const h = document.createElement('div');
-            h.className = 'cursor-emoji';
-            h.innerText = emojis[Math.floor(Math.random() * emojis.length)];
-            h.style.left = e.clientX + 'px';
-            h.style.top = e.clientY + 'px';
-            document.body.appendChild(h);
-            setTimeout(() => h.remove(), 1000);
+        // Intro Button Function
+        document.getElementById('intro-btn').addEventListener('click', () => {
+            document.getElementById('intro-btn').style.display = 'none';
+            document.getElementById('main-content').style.display = 'block';
+            createHearts();
         });
+
+        // Floating Hearts Logic
+        function createHearts() {
+            for(let i=0; i<20; i++) {
+                const h = document.createElement('div');
+                h.innerHTML = '❤️';
+                h.className = 'heart';
+                h.style.left = Math.random() * 100 + 'vw';
+                h.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                document.body.appendChild(h);
+            }
+        }
     </script>
 </body>
 </html>
