@@ -5,92 +5,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happy 6-Month Monthsary! ❤️</title>
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Segoe UI', sans-serif; background: radial-gradient(circle, #1a0b2e 0%, #05010d 100%); min-height: 100vh; display: flex; flex-direction: column; align-items: center; color: white; overflow: hidden; }
-
-        /* Floating Hearts */
-        .heart-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
-        .heart { position: absolute; bottom: -10%; font-size: 20px; animation: rise linear infinite; opacity: 0.5; }
-        @keyframes rise { 0% { transform: translateY(0); } 100% { transform: translateY(-110vh); } }
-
-        /* Envelopes */
-        .content-wrapper { z-index: 1; display: flex; flex-direction: column; align-items: center; width: 100%; padding-top: 50px; }
-        .envelope { width: 220px; height: 150px; background: #fceade; border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; transition: all 0.5s ease-in-out; margin: 15px; z-index: 2; color: #333; }
-        .envelope.active { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(2.5); z-index: 2000; box-shadow: 0 0 50px rgba(0,0,0,0.8); background: white; }
+        body { font-family: 'Georgia', serif; background: #ffdee9; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow-x: hidden; margin: 0; }
         
-        .hidden-content { display: none; padding: 20px; text-align: center; }
-        .active .hidden-content { display: block; }
+        /* Layout Grid */
+        .main-container { display: grid; grid-template-columns: 1fr 2fr 1fr; align-items: center; gap: 40px; max-width: 1000px; padding: 20px; }
         
-        /* Buttons */
-        .btn { padding: 10px 20px; background: #ff477e; color: white; border: none; border-radius: 20px; cursor: pointer; margin-top: 10px; font-weight: bold; }
-        #fireworks-btn { display: none; position: fixed; bottom: 50px; padding: 20px 40px; font-size: 20px; z-index: 3000; animation: pulse 2s infinite; }
-        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
+        .envelope { width: 180px; height: 120px; background: #fffaf0; border: 2px solid #e3beaa; border-radius: 5px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: transform 0.3s; margin: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .envelope:hover { transform: scale(1.05); }
 
-        /* Cursor Trail */
-        .cursor-heart { position: fixed; pointer-events: none; z-index: 9999; animation: float 1s ease-out forwards; }
-        @keyframes float { 0% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; transform: translateY(-50px); } }
+        /* Cursor Trail Logic */
+        .cursor-emoji { position: fixed; pointer-events: none; z-index: 9999; animation: fadeUp 1s ease-out forwards; font-size: 20px; }
+        @keyframes fadeUp { 0% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; transform: translateY(-60px); } }
     </style>
 </head>
 <body>
 
-    <div class="heart-bg" id="heart-bg"></div>
-    <div id="backdrop" style="display:none; position:fixed; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:1500;" onclick="closeAll()"></div>
-
-    <div class="content-wrapper">
-        <h1>Our Journey</h1>
-        <div id="envelope-grid" style="display: flex; flex-wrap: wrap; justify-content: center;">
-            <!-- Envelope 1 -->
-            <div class="envelope" onclick="openEnvelope(this)">
-                <h3>Month 1</h3>
-                <div class="hidden-content">
-                    <p>Our journey began here!</p>
-                    <button class="btn" onclick="closeAll(event)">Close</button>
-                </div>
-            </div>
-            <!-- Add more envelopes like the one above -->
+    <div class="main-container">
+        <div>
+            <div class="envelope">Month 1</div>
+            <div class="envelope">Month 2</div>
+            <div class="envelope">Month 3</div>
         </div>
-        
-        <!-- Fireworks Button -->
-        <button id="fireworks-btn" class="btn" onclick="alert('🎆 BOOM! Fireworks for you! 🎆')">Ready for the Surprise? 🎆</button>
+
+        <div style="text-align: center;">
+            <h1>To My Love</h1>
+            <p>Our journey is just beginning...</p>
+        </div>
+
+        <div>
+            <div class="envelope">Month 4</div>
+            <div class="envelope">Month 5</div>
+            <div class="envelope">Month 6</div>
+        </div>
     </div>
 
     <script>
-        // Floating Hearts
-        const bg = document.getElementById('heart-bg');
-        for(let i=0; i<20; i++) {
-            const h = document.createElement('div');
-            h.className = 'heart'; h.innerText = '❤️';
-            h.style.left = Math.random() * 100 + '%';
-            h.style.animationDuration = (Math.random() * 5 + 5) + 's';
-            bg.appendChild(h);
-        }
-
-        // Tracking opened envelopes
-        let openedEnvelopes = new Set();
-        const totalEnvelopes = 1; // UPDATE THIS if you add more envelopes
-
-        function openEnvelope(el) {
-            el.classList.add('active');
-            document.getElementById('backdrop').style.display = 'block';
-            openedEnvelopes.add(el);
-            
-            // Show fireworks button if all are read
-            if(openedEnvelopes.size === totalEnvelopes) {
-                document.getElementById('fireworks-btn').style.display = 'block';
-            }
-        }
-
-        function closeAll(e) {
-            if(e) e.stopPropagation();
-            document.querySelectorAll('.envelope').forEach(el => el.classList.remove('active'));
-            document.getElementById('backdrop').style.display = 'none';
-        }
-
-        // Cursor Trail
+        const emojis = ['❤️', '✨', '🌹', '💌', '💘'];
         document.addEventListener('mousemove', (e) => {
             const h = document.createElement('div');
-            h.className = 'cursor-heart'; h.innerText = '❤️';
-            h.style.left = e.clientX + 'px'; h.style.top = e.clientY + 'px';
+            h.className = 'cursor-emoji';
+            h.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+            h.style.left = e.clientX + 'px';
+            h.style.top = e.clientY + 'px';
             document.body.appendChild(h);
             setTimeout(() => h.remove(), 1000);
         });
